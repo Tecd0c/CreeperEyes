@@ -77,7 +77,7 @@ struct {
 } eye[] = { // OK to comment out one of these for single-eye display:
   // displayType(SELECT_L_PIN,DISPLAY_DC,0),SELECT_L_PIN,{NOBLINK},
   Adafruit_SSD1351(128, 128, &SPI, SELECT_L_PIN, DISPLAY_DC, DISPLAY_RESET), SELECT_L_PIN,{NOBLINK},
-  Adafruit_SSD1351(128, 128, &SPI, SELECT_R_PIN, DISPLAY_DC, DISPLAY_RESET), SELECT_L_PIN,{NOBLINK},
+  Adafruit_SSD1351(128, 128, &SPI, SELECT_R_PIN, DISPLAY_DC, DISPLAY_RESET), SELECT_R_PIN,{NOBLINK},
   // displayType(SELECT_R_PIN,DISPLAY_DC,0),SELECT_R_PIN,{NOBLINK},
 };
 #define NUM_EYES (sizeof(eye) / sizeof(eye[0]))
@@ -144,7 +144,7 @@ void drawEye( // Renders one eye.  Inputs must be pre-clipped & valid.
     scleraX = scleraXsave;
     irisX   = scleraXsave - (SCLERA_WIDTH - IRIS_WIDTH) / 2;
     for(screenX=0; screenX<SCREEN_WIDTH; screenX++, scleraX++, irisX++) {
-      int effectiveX = e == 1 ? screenX : SCREEN_WIDTH - screenX;
+      int effectiveX = e == 1 ? screenX : SCREEN_WIDTH - 1 - screenX;
       if((lower[screenY][effectiveX] <= lT) ||
          (upper[screenY][effectiveX] <= uT)) {             // Covered by eyelid
         p = 0;
